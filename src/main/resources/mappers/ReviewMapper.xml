@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dabateam.cleanvisit.mapper.ReviewMapper">
+
+    <insert id="create" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO review (user_id, place_seq, title, content, score)
+        VALUES (
+                   #{userId},
+                   #{placeSeq},
+                   #{title},
+                   #{content},
+                   #{score}
+               )
+    </insert>
+
+    <resultMap id="ReviewMap" type="Review">
+        <id property="seq" column="seq" />
+        <result property="userId" column="user_id" />
+        <result property="placeSeq" column="place_seq" />
+        <result property="title" column="title" />
+        <result property="content" column="content" />
+        <result property="score" column="score" />
+        <association property="user" javaType="User">
+            <id property="userId" column="user_id" />
+            <result property="imgUrl" column="user_img_url" />
+        </association>
+    </resultMap>
+
+    <select id="findReviewList" resultMap="ReviewMap">
+        SELECT r.*, u.img_url user_img_url
+        FROM review r
+        INNER JOIN user u ON r.user_id = u.id
+        <where>
+            <if test="prevLastReviewSeq != null">AND r.seq > #{prevLastReviewSeq}</if>
+            <if test="placeSeq != null">AND r.place_seq = #{placeSeq}</if>
+            <if test="userSeq != null">AND r.user_seq = #{userSeq}</if>
+        </where>
+        ORDER BY r.seq DESC
+        <if test="limitSize != null">LIMIT #{limitSize}</if>
+    </select>
+
+    <delete id="delete">
+        DELETE
+        FROM review
+        WHERE seq=#{seq} AND user_id=#{userId}
+
+    </delete>
+</mapper>

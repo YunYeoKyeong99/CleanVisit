@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+
+        <title>Place</title>
+    </head>
+    <body>
+        <th:block th:replace="fragments/header :: header"></th:block>
+
+        <h1>PLACE LIST</h1>
+
+        <table>
+            <tr th:each="place:${placeList}" onclick="location.href='/places/detail?place_seq=[[${place.seq}]]'">
+                <td>[[${place.name}]]</td>
+                <td>[[${place.imgUrl}]]</td>
+                <td>[[${place.address}]]</td>
+                <td>[[${place.score}]]</td>
+            </tr>
+        </table>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+    </body>
+</html>

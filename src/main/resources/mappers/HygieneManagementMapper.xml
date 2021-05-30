@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dabateam.cleanvisit.mapper.HygieneManagementMapper">
+    <insert id="create" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO hygiene_management (seq, place_seq, hand_sanitization, heat_check, wearing_mask, distance)
+        VALUES (
+                #{seq},
+                #{placeSeq},
+                #{handSanitization},
+                #{heatCheck},
+                #{wearingMask},
+                #{distance}
+        )
+    </insert>
+</mapper>

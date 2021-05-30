@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dabateam.cleanvisit.mapper.PlaceMapper">
+    <insert id="create" useGeneratedKeys="true" keyProperty="seq">
+        INSERT INTO place (admin_id, name, address, phone, img_url, category)
+        VALUES (
+                #{adminId},
+                #{name},
+                #{address},
+                #{phone},
+                #{imgUrl},
+                #{category}
+        )
+    </insert>
+
+    <select id="findPlaceList" resultType="Place">
+        SELECT *
+        FROM place
+        <where>
+            <if test="prevLastPlaceSeq != null">AND seq > #{prevLastPlaceSeq}</if>
+            <if test="query != null">AND name LIKE concat('%',#{query},'%')</if>
+        </where>
+        ORDER BY seq DESC
+        <if test="limitSize != null">LIMIT #{limitSize}</if>
+    </select>
+
+    <select id="findPlaceByUserId" resultType="Place">
+        SELECT *
+        FROM place
+        WHERE admin_id=#{userId}
+    </select>
+
+    <select id="findBySeq" resultType="Place">
+        SELECT *
+        FROM place
+        WHERE seq=#{seq}
+    </select>
+
+    <resultMap id="PlaceDetailMap" type="Place">
+        <id property="seq" column="seq" />
+        <result property="adminId" column="admin_id" />
+        <result property="name" column="name" />
+        <result property="address" column="address" />
+        <result property="phone" column="phone" />
+        <result property="imgUrl" column="img_url" />
+        <result property="category" column="category" />
+        <result property="createdAt" column="created_at" />
+        <association property="hygieneManagement" javaType="HygieneManagement">
+            <id property="seq" column="h_seq" />
+            <result property="placeSeq" column="seq" />
+            <result property="handSanitization" column="h_hand_sanitization" />
+            <result property="heatCheck" column="h_heat_check" />
+            <result property="wearingMask" column="h_wearing_mask" />
+            <result property="distance" column="h_distance" />
+        </association>
+        <association property="quarantine" javaType="Quarantine">
+            <id property="seq" column="q_seq" />
+            <result property="placeSeq" column="seq" />
+            <result property="datetime" column="q_datetime" />
+        </association>
+    </resultMap>
+
+    <select id="findPlaceDetail" resultMap="PlaceDetailMap">
+        SELECT p.*,
+               h.seq h_seq, h.hand_sanitization hm_hand_sanitization, h.heat_check h_heat_check,
+               h.wearing_mask h_wearing_mask, h.distance h_distance,
+               q.datetime q_datetime
+        FROM place p
+        INNER JOIN hygiene_management h ON p.seq=h.place_seq
+        LEFT OUTER JOIN quarantine q ON p.seq=q.place_seq
+        ORDER BY q.datetime DESC
+        LIMIT 1
+    </select>
+</mapper>

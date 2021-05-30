@@ -1,0 +1,71 @@
+<html xmlns:th="http://www.thymeleaf.org">
+    <head>
+        <title>Home</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+
+    <body>
+        <h1>User</h1>
+
+        <table>
+            <tr>
+                <td><label for="userId">ID</label></td>
+                <td><input type="text" value="" id="userId"></td>
+            </tr>
+            <tr>
+                <td><label for="userPassword">PW</label></td>
+                <td><input type="text" value="" id="userPassword"></td>
+            </tr>
+            <tr>
+                <td><label for="userName">NAME</label></td>
+                <td><input type="text" value="" id="userName"></td>
+            </tr>
+            <tr>
+                <td><label for="userBirthday">BIRTHDAY</label></td>
+                <td><input type="text" value="" id="userBirthday"></td>
+            </tr>
+            <tr>
+                <td><label for="userAddress">ADDRESS</label></td>
+                <td><input type="text" value="" id="userAddress"></td>
+            </tr>
+        </table>
+
+        <div>
+            <button id="userRegisterBtn">REGISTER</button>
+        </div>
+
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
+        <script>
+            $(document).ready(function() {
+                $("#userRegisterBtn").on("click", function () {
+                    var userObject = {
+                        id: $("#userId").val(),
+                        password: $("#userPassword").val(),
+                        name: $("#userName").val(),
+                        birthday: $("#userBirthday").val(),
+                        address: $("#userAddress").val(),
+                    }
+
+                    $.ajax({
+                        type:"POST",
+                        url: "/users",
+                        data: JSON.stringify(userObject),
+                        contentType:"application/json; charset=UTF-8",
+                        success: function () {
+                            alert("Created");
+                        },
+                        error: function (xhr, textStatus, error) {
+                            alert("code:"+xhr.status+"\n"
+                                +"message:"+xhr.responseText+"\n"
+                                +"error:"+error
+                            );
+                        }
+                    });
+                });
+            });
+        </script>
+
+    </body>
+</html>
