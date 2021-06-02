@@ -1,37 +1,71 @@
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
-        <title>Home</title>
+        <title>Signin</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+        <style>
+            h2{
+                margin: 50px;
+            }
+
+        </style>
     </head>
 
     <body>
-        <h1>User</h1>
+    <th:block th:replace="fragments/header :: header"></th:block>
 
-        <table>
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <td><label for="userId">ID</label></td>-->
+<!--                <td><input type="text" value="" id="userId"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td><label for="userPassword">PW</label></td>-->
+<!--                <td><input type="text" value="" id="userPassword"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td><label for="userName">NAME</label></td>-->
+<!--                <td><input type="text" value="" id="userName"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td><label for="userBirthday">BIRTHDAY</label></td>-->
+<!--                <td><input type="text" value="" id="userBirthday"></td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td><label for="userAddress">ADDRESS</label></td>-->
+<!--                <td><input type="text" value="" id="userAddress"></td>-->
+<!--            </tr>-->
+<!--        </table>-->
+        <h2>CleanVisit 회원가입</h2>
+        <table border="0" style="height: auto; width: 98%; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
             <tr>
-                <td><label for="userId">ID</label></td>
-                <td><input type="text" value="" id="userId"></td>
-            </tr>
-            <tr>
-                <td><label for="userPassword">PW</label></td>
-                <td><input type="text" value="" id="userPassword"></td>
-            </tr>
-            <tr>
-                <td><label for="userName">NAME</label></td>
-                <td><input type="text" value="" id="userName"></td>
-            </tr>
-            <tr>
-                <td><label for="userBirthday">BIRTHDAY</label></td>
-                <td><input type="text" value="" id="userBirthday"></td>
-            </tr>
-            <tr>
-                <td><label for="userAddress">ADDRESS</label></td>
-                <td><input type="text" value="" id="userAddress"></td>
+                <td style="border-top: 1px solid grey; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
+                    <br>
+                    <h5>회원 정보</h5><br>
+                    <strong>ID*</strong>
+                    <br>
+                    <input type="text" name="user_id" size="100" id="userId" placeholder="회원 아이디 입력" style="margin: 10px 10px 10px 10px;">
+                    <br><br>
+                    <strong>Password*</strong>
+                    <br>
+                    <input type="text" name="user_pw" size="100" id="userPassword" placeholder="회원 비밀번호 입력" style="margin: 10px 10px 10px 10px;">
+                    <br><br>
+                    <strong>이름*</strong>
+                    <br>
+                    <input type="text" name="user_name" size="100" id="userName" placeholder="회원 이름 입력" style="margin: 10px 10px 10px 10px;">
+                    <br><br>
+                    <strong>생년월일*</strong><br>
+                    <input type="date" name="userBirthday"><br><br>
+                    <strong>주소*</strong>
+                    <br>
+                    <input type="text" name="user_address" size="100" id="userAddress" placeholder="회원 주소 입력" style="margin: 10px 10px 10px 10px;">
+                    <br><br>
+                </td>
             </tr>
         </table>
-
         <div>
-            <button id="userRegisterBtn">REGISTER</button>
+            <button id="userRegisterBtn" class="btn btn-outline-primary" type="submit" style="float: right; width: 90px; margin: 10px 50px 10px 20px; padding: 10px 10px 10px 10px;">회원가입</button>
         </div>
 
 
