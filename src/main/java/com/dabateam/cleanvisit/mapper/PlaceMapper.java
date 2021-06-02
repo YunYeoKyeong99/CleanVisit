@@ -28,4 +28,8 @@ public interface PlaceMapper {
             @Param("seq") Long seq
     );
 
+    int updatePlaceImageUrl(
+            @Param("seq") Long seq,
+            @Param("imgUrl") String imgUrl
+    );
 }

@@ -48,36 +48,19 @@
         <br>
         <div id="place_info" style="height: auto; width: 98%; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>공공장소 이름</h3>
-            <img th:if="${place.img_url == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
-            <img  th:if="${place.img_url != null}" src="${place_img_url}" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
-            <button th:if="${place.admin_id != user.id}" class="btn btn-outline-primary" onclick="location.href='sanitary_update.html'" style="float: right;">방역정보 업데이트</button><br><br>
+            <img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
+            <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
+            <button th:if="${place.adminId != user.id}" class="btn btn-outline-primary" onclick="location.href='sanitary_update.html'" style="float: right;">방역정보 업데이트</button><br><br>
             <button class="btn btn-outline-primary" type="button" onclick="location.href='/reviews/register?place_seq=${place.seq}'" style="float: right;">리뷰 작성</button>
             <p><strong>주소: </strong> [[${place.address}]]</p>
-            <p><strong>전화번호: </strong> [[${place.phone}}]]</p>
+            <p><strong>전화번호: </strong> [[${place.phone}]]</p>
             <br><br><br><br><br>
         </div>
         <br>
         <div id="review_simple" style= "height: 300px; width: 48%; float:left; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>평가 및 리뷰</h3>
-            <script>
-                var star = [[${place.score}]];
-                if (star > 4) {
-                    document.write("<img src='img/star_5.jpg' style= 'float: left; height: 40px; width: 200px';>");
-                }
-                else if (star > 3) {
-                    document.write("<img src='img/star_4.jpg' style= 'float: left; height: 40px; width: 200px';>");
-                }
-                else if (star > 2) {
-                    document.write("<img src='img/star_3.jpg' style= 'float: left; height: 40px; width: 200px';>");
-                }
-                else if (star > 1) {
-                    document.write("<img src='img/star_2.jpg' style= 'float: left; height: 40px; width: 200px';>");
-                }
-                else {
-                    document.write("<img src='img/star_1.jpg' style= 'float: left; height: 40px; width: 200px';>");
-                }
-            </script>
-            <p>2,134건의 리뷰</p>
+            <img th:src='|/img/star_@{place.reviewAvgScoreInt}.jpg|' style= 'float: left; height: 40px; width: 200px';>
+            <p>[[${place.reviewCount}]]건의 리뷰</p>
             <br><br><br><br>
             <a href="/reviews/list?type=PLACE&place_seq=[[${place.seq}]]" style="text-align: right;"> >>더보기</a>
         </div>

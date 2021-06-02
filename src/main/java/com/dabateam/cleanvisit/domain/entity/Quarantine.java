@@ -16,6 +16,6 @@ public class Quarantine {
 
     private Long placeSeq;
 
-    @JsonFormat(pattern="yyyy-MM-dd ")
+    @JsonFormat(pattern="yyyy-MM-dd'T'HH:mm")
     private LocalDateTime datetime;
 }

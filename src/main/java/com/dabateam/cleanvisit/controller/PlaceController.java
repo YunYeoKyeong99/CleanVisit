@@ -5,10 +5,12 @@ import com.dabateam.cleanvisit.domain.entity.Place;
 import com.dabateam.cleanvisit.domain.entity.Quarantine;
 import com.dabateam.cleanvisit.domain.entity.User;
 import com.dabateam.cleanvisit.domain.req.ReqPlaceCreate;
+import com.dabateam.cleanvisit.domain.req.ResUploadResult;
 import com.dabateam.cleanvisit.resolver.SessionUser;
 import com.dabateam.cleanvisit.service.HygieneManagementService;
 import com.dabateam.cleanvisit.service.PlaceService;
 import com.dabateam.cleanvisit.service.QuarantineService;
+import com.dabateam.cleanvisit.service.UploadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Max;
@@ -35,6 +38,7 @@ import java.util.List;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final UploadService uploadService;
 
     @GetMapping("/list")
     public void getPlaces(
@@ -84,7 +88,7 @@ public class PlaceController {
 
     @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     @ResponseBody
-    public void register(
+    public Place register(
             @SessionUser String userId,
             @Valid @RequestBody ReqPlaceCreate reqPlaceCreate
     ) {
@@ -95,6 +99,21 @@ public class PlaceController {
         place.setAdminId(userId);
 
         placeService.createPlace(place, hygieneManagement, quarantine);
+
+        return place;
+    }
+
+    @PutMapping("/{seq}/image")
+    public ResponseEntity<Void> uploadImages(
+            @SessionUser String userId,
+            @PathVariable Long seq,
+            MultipartFile uploadFile
+    ) {
+        ResUploadResult resUploadResult = uploadService.uploadFile(uploadFile);
+
+        placeService.updateImage(userId, seq, resUploadResult.getImageURL());
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
 //    @PostMapping("/v1/products/{seq}/likes")
@@ -111,7 +130,7 @@ public class PlaceController {
     @PostMapping(value="/{seq}/likes", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createPlaceLike(
             @SessionUser String userId,
-            @Valid @Min(1L) Long seq
+            @PathVariable Long seq
     ){
         placeService.createLike(userId,seq);
 

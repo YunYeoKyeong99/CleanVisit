@@ -1,10 +1,13 @@
 package com.dabateam.cleanvisit.domain.entity;
 
+import com.dabateam.cleanvisit.service.UploadService;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
+import java.io.File;
+import java.util.Optional;
 
 @Getter
 @Setter
@@ -34,4 +37,16 @@ public class Place {
     HygieneManagement hygieneManagement;
 
     Quarantine quarantine;
+
+    private Double reviewAvgScore;
+
+    private Integer reviewCount;
+
+    public Integer getReviewAvgScoreInt() {
+        if(reviewAvgScore != null) {
+            return reviewAvgScore.intValue();
+        }
+        return null;
+        // return Optional.ofNullable(reviewAvgScore).map(Double::intValue).orElse(null);
+    }
 }

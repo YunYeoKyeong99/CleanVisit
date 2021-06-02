@@ -19,5 +19,5 @@ public class HygieneManagement {
 
     private Boolean wearingMask;
 
-    private Integer distance;
+    private String distance;
 }

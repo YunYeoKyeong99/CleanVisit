@@ -64,5 +64,19 @@ public class PlaceService {
         }catch(Exception e){
             // DuplicateKeyException
         }
-    };
+    }
+
+    public void updateImage(String userId, Long seq, String imageUrl) {
+        Place place = placeMapper.findBySeq(seq);
+
+        if(!place.getAdminId().equals(userId)) {
+            throw new RuntimeException(); // TODO FIX
+        }
+
+        int updateCount = placeMapper.updatePlaceImageUrl(seq, imageUrl);
+
+        if(updateCount != 1) {
+            throw new RuntimeException(); // TODO FIX
+        }
+    }
 }

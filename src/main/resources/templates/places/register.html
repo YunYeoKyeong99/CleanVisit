@@ -76,7 +76,7 @@
                     <br><br>
                     <strong>공공장소 이미지*</strong>
                     <br><br>
-                    <input type="file" accept="image/*" multiple required>
+                    <input type="file" id="place_img" accept="image/*" multiple required>
                     <br><br>
                 </td>
             </tr>
@@ -86,7 +86,7 @@
                     <h3>최근 방역 정보</h3>
                     <br>
                     <strong>최근 방역 날짜</strong><br>
-                    <input type="date" id="quarantine_date">
+                    <input type="datetime-local" id="quarantine_date">
                     <br><br>
                 </td>
             </tr>
@@ -127,12 +127,12 @@
         <script>
             $(document).ready(function() {
                 $("#placeRegisterBtn").on("click", function () {
+
                     var bodyObject = {
                         place: {
                             name: $("#place_name").val(),
                             address: $("#place_address").val(),
                             phone: $("#place_phone").val(),
-                            //img_url: $("#userBirthday").val(),
                             // TODO category
                         },
                         quarantine: {
@@ -143,16 +143,41 @@
                             heatCheck: $("#heat_check").is(":checked"),
                             wearingMask: $("#wearing_mask").is(":checked"),
                             distance: $("#distance").val(),
-                        }
+                        },
                     }
+
+                    var formData = new FormData();
+
+                    var inputFile = $("#place_img");
+
+                    var files = inputFile[0].files;
+
+                    formData.append("uploadFile",files[0]);
 
                     $.ajax({
                         type:"POST",
                         url: "/places",
                         data: JSON.stringify(bodyObject),
                         contentType:"application/json; charset=UTF-8",
-                        success: function () {
-                            alert("Created");
+                        success: function (place) {
+
+                            $.ajax({
+                                url: '/places/'+place.seq+'/image',
+                                processData: false,
+                                contentType: false,
+                                data: formData,
+                                type: 'PUT',
+                                dataType:'text',
+                                success: function () {
+                                    location.href = '/places/detail?place_seq=' + place.seq;
+                                },
+                                error: function (jqXHR, textStatus, errorThrown) {
+                                    alert("code:"+jqXHR.status+"\n"
+                                        +"message:"+jqXHR.responseText+"\n"
+                                        +"error:"+errorThrown
+                                    );
+                                }
+                            });
                         },
                         error: function (xhr, textStatus, error) {
                             alert("code:"+xhr.status+"\n"

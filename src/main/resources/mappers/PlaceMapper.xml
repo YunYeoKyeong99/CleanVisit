@@ -47,7 +47,8 @@
         <result property="phone" column="phone" />
         <result property="imgUrl" column="img_url" />
         <result property="category" column="category" />
-        <result property="createdAt" column="created_at" />
+        <result property="reviewCount" column="r_cnt" />
+        <result property="reviewAvgScore" column="r_avg_score" />
         <association property="hygieneManagement" javaType="HygieneManagement">
             <id property="seq" column="h_seq" />
             <result property="placeSeq" column="seq" />
@@ -67,11 +68,26 @@
         SELECT p.*,
                h.seq h_seq, h.hand_sanitization hm_hand_sanitization, h.heat_check h_heat_check,
                h.wearing_mask h_wearing_mask, h.distance h_distance,
-               q.datetime q_datetime
+               q.datetime q_datetime,
+               ifnull(r.cnt, 0) as r_cnt, r.avg_score r_avg_score
+               -- (SELECT count(score) FROM review WHERE place_seq = p.seq) as cnt,
+               -- (SELECT avg(score) FROM review WHERE place_seq = p.seq) as avg_score
         FROM place p
         INNER JOIN hygiene_management h ON p.seq=h.place_seq
         LEFT OUTER JOIN quarantine q ON p.seq=q.place_seq
+        LEFT OUTER JOIN (
+            SELECT place_seq, count(*) as cnt, avg(score) as avg_score
+            FROM review
+            GROUP BY place_seq
+        ) r ON p.seq = r.place_seq
+        WHERE p.seq = #{seq}
         ORDER BY q.datetime DESC
         LIMIT 1
     </select>
+
+    <update id="updatePlaceImageUrl">
+        UPDATE place
+        SET img_url = #{imgUrl}
+        WHERE seq = #{seq}
+    </update>
 </mapper>
