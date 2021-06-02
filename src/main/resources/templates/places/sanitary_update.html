@@ -1,13 +1,13 @@
 <!doctype html>
 <html lang="ko"
-      xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+  xmlns:th="http://www.thymeleaf.org"
+  xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
         
-        <title>공공장소 및 관리자 등록</title>
+        <title>방역정보 업데이트</title>
         <style>
             h2{
                 margin: 50px;
@@ -54,79 +54,56 @@
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
     
         <br>
-        <th:block th:replace="fragments/header :: header"></th:block>
-    
-        <h2>CleanVisit에 공공장소 추가</h2>
+      <th:block th:replace="fragments/header :: header"></th:block>
+        <h2>방역 정보 업데이트</h2>
         <table border="0" style="height: auto; width: 98%; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
-            <tr>
-                <td style="border-top: 1px solid grey; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
-                    <br>
-                    <h3>기본 정보</h3>
-                    <strong >공공장소 이름*</strong>
-                    <br>
-                    <input type="text" name="place_name" size="100" id="place_name" placeholder="공공장소명 입력" style="margin: 10px 10px 10px 10px;">
-                    <br><br>
-                    <strong>주소*</strong>
-                    <br>
-                    <input type="text" name="place_address" size="100" id="place_address" placeholder="도로명 주소" style="margin: 10px 10px 10px 10px;">
-                    <br><br>
-                    <strong>연락처*</strong>
-                    <br>
-                    <input type="text" name="place_phone" size="100" id="place_phone" placeholder="공공장소 연락처 입력" style="margin: 10px 10px 10px 10px;">
-                    <br><br>
-                    <strong>공공장소 이미지*</strong>
-                    <br><br>
-                    <input type="file" accept="image/*" multiple required>
-                    <br><br>
-                </td>
-            </tr>
-            <tr>
-                <td style="border-top: 1px solid grey; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
-                    <br>
-                    <h3>최근 방역 정보</h3>
-                    <br>
-                    <strong>최근 방역 날짜</strong><br>
-                    <input type="date" id="quarantine_date">
-                    <br><br>
-                </td>
-            </tr>
+          <tr>
+            <td style="border-top: 1px solid grey; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
+                <br>
+                <h3>최근 방역 정보</h3>
+                <br>
+                <strong>최근 방역 날짜</strong><br>
+                <input type="date" id="quarantine_date">
+                <br><br>
+            </td>
+          </tr>
 
 
-            <tr>
-                <td style="border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
-                    <br>
-                    <h3>위생 관리 정보</h3>
-                    <br>
-                    <strong>손소독 여부</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" name="hand" id="hand_sanitization">
-                    <br><br>
-                    <strong>발열체크 여부</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" name="heat" id="heat_check">
-                    <br><br>
-                    <strong>마스크 착용</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <input type="checkbox" name="mask" id="wearing_mask">
-                    <br><br>
-                    <strong>거리두기 여부</strong>&nbsp;&nbsp;&nbsp;&nbsp;
-                    <select name="distance" id="distance" size="1" style="height: 30px; width: 200px;">
-                        <option value="10" selected>~ 10m 이내</option>
-                        <option value="20">10m ~ 20m 이내</option>
-                        <option value="30">20m ~ 30m 이내</option>
-                        <option value="40">30m ~ 40m 이내</option>
-                        <option value="50">40m ~ 50m 이내</option>
-                    </select>
-                    <br><br>
-                </td>
-            </tr>
+          <tr>
+            <td style="border-top: 1px solid grey; border-bottom: 1px solid grey; margin: 10px 10px 10px 20px; padding: 10px 10px 10px 10px;">
+                <br>
+                <h3>위생 관리 정보</h3>
+                <br>
+                <strong>손소독 여부</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="hand" id="hand_sanitization">
+                <br><br>
+                <strong>발열체크 여부</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="heat" id="heat_check">
+                <br><br>
+                <strong>마스크 착용</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                <input type="checkbox" name="mask" id="wearing_mask">
+                <br><br>
+                <strong>거리두기 여부</strong>&nbsp;&nbsp;&nbsp;&nbsp;
+                <select name="distance" id="distance" size="1" style="height: 30px; width: 200px;">
+                    <option value="10" selected>~ 10m 이내</option>
+                    <option value="20">10m ~ 20m 이내</option>
+                    <option value="30">20m ~ 30m 이내</option>
+                    <option value="40">30m ~ 40m 이내</option>
+                    <option value="50">40m ~ 50m 이내</option>
+                </select>
+                <br><br>
+            </td>
+          </tr>
+        
         </table>
-        <button id="placeRegisterBtn" class="btn btn-outline-primary" type="submit" style="float: right; width: 90px; margin: 10px 50px 10px 20px; padding: 10px 10px 10px 10px;">등록</button>
-
+        <button class="btn btn-outline-primary" id="placeUpdateBtn" type="submit" style="float: right; width: 90px; margin: 10px 50px 10px 20px; padding: 10px 10px 10px 10px;">수정</button>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
 
         <script>
             $(document).ready(function() {
-                $("#placeRegisterBtn").on("click", function () {
+                $("#placeUpdateBtn").on("click", function () {
                     var bodyObject = {
                         place: {
                             name: $("#place_name").val(),
@@ -164,6 +141,6 @@
                 });
             });
         </script>
-    </body>
+      </body>
     
 </html>

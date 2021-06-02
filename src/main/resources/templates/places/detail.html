@@ -91,8 +91,7 @@
             <p>입장 시 손 소독 여부: <span th:text="${place.hygieneManagement.handSanitization} ? 'O' : 'X'"></span><br>
             발열체크 여부: <span th:text="${place.hygieneManagement.heatCheck} ? 'O' : 'X'"></span><br>
             마스크 착용: <span th:text="${place.hygieneManagement.wearingMask} ? 'O' : 'X'"></span><br>
-            거리두기 여부: 100m~200m</p>
+            거리두기 여부: <span th:text="${place.hygieneManagement.distance} ? 'O' : 'X'"></p>
         </div>
     </body>
 </html>
-
