@@ -11,47 +11,21 @@
         </style>
     </head>
     <body>
-      <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="#">CleanVisit</a>
-
-          <form class="d-flex">
-            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-            <button type="button" class="btn btn-outline-primary" onclick="location.href='list.html'">Search</button>
-          
-          </form>
-
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-          </button>
-          <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-              <li class="nav-item">
-                <a class="nav-link" href="#" onclick="location.href='place_list_cafe.html'">카페</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" onclick="location.href='place_list_restaurant.html'">음식점</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" onclick="location.href='place_list_shopping.html'">쇼핑</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#" onclick="location.href='place_list_etc.html'">기타</a>
-              </li>
-            </ul>
-            <button type="button" class="btn btn-outline-primary">로그인</button>
-          </div>
-        </div>
-      </nav>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
-
+        <th:block th:replace="fragments/header :: header"></th:block>
         <br>
         <div id="place_info" style="height: auto; width: 98%; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>[[${place.name}]]</h3>
             <img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <button th:if="${place.adminId != user.id}" class="btn btn-outline-primary" onclick="location.href='sanitary_update.html'" style="float: right;">방역정보 업데이트</button><br><br>
-            <button class="btn btn-outline-primary" type="button" onclick="location.href='/reviews/register?place_seq=${place.seq}'" style="float: right;">리뷰 작성</button>
+            <button class="btn btn-outline-primary" type="button" onclick="location.href='../reviews/register.html'" style="float: right;">리뷰 작성</button>     <!-- onclick="location.href='../reviews/register?place_seq=${place.seq}'" -->
+            <br><br>
+            <button onclick="changelike()" type='button' style='float: right;'><img src='img/heart_empty.jpg' id='like' style='height: 50px; width: 50px;'></button>
+            <script>
+              function changelike(){
+                document.getElementById("like").src = "img/heart.jpg";
+              }
+            </script>
             <p><strong>주소: </strong> [[${place.address}]]</p>
             <p><strong>전화번호: </strong> [[${place.phone}]]</p>
             <br><br><br><br><br>
@@ -59,11 +33,11 @@
         <br>
         <div id="review_simple" style= "height: 300px; width: 48%; float:left; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>평가 및 리뷰</h3>
-            <img th:src='|/img/star_@{place.reviewAvgScoreInt}.jpg|' style= 'float: left; height: 40px; width: 200px';>
+            <img src='img/star_5.jpg' style= 'float: left; height: 40px; width: 200px';> <!--th:src='|img/star_@{place.reviewAvgScoreInt}.jpg|'-->
             <br>
             <p>[[${place.reviewCount}]]건의 리뷰</p>
             <br><br><br><br>
-            <a href="/reviews/list?type=PLACE&place_seq=[[${place.seq}]]" style="text-align: right;"> >>더보기</a>
+            <a href="../reviews/place_review.html" style="text-align: right;"> >>더보기</a>  <!--href="/reviews/list?type=PLACE&place_seq=[[${place.seq}]]"-->
         </div>
         <div id="place_detail" style= "height: 300px; width: 48%; float:right; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>상세정보</h3>
