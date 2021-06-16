@@ -1,6 +1,7 @@
 package com.dabateam.cleanvisit.mapper;
 
 import com.dabateam.cleanvisit.domain.entity.Place;
+import com.dabateam.cleanvisit.domain.mappedenum.PlaceCategory;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -13,7 +14,8 @@ public interface PlaceMapper {
             //@Param("userSeq") Integer userSeq,
             @Param("prevLastPlaceSeq") Long prevLastPlaceSeq,
             @Param("limitSize") Integer pageSize,
-            @Param("query") String query
+            @Param("query") String query,
+            @Param("category") Integer category
     );
 
     Place findPlaceByUserId(

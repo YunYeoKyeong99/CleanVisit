@@ -22,6 +22,7 @@
         <where>
             <if test="prevLastPlaceSeq != null">AND seq > #{prevLastPlaceSeq}</if>
             <if test="query != null">AND name LIKE concat('%',#{query},'%')</if>
+            <if test="category!=null">AND category=#{category}</if>
         </where>
         ORDER BY seq DESC
         <if test="limitSize != null">LIMIT #{limitSize}</if>
@@ -70,8 +71,6 @@
                h.wearing_mask h_wearing_mask, h.distance h_distance,
                q.datetime q_datetime,
                ifnull(r.cnt, 0) as r_cnt, r.avg_score r_avg_score
-               -- (SELECT count(score) FROM review WHERE place_seq = p.seq) as cnt,
-               -- (SELECT avg(score) FROM review WHERE place_seq = p.seq) as avg_score
         FROM place p
         INNER JOIN hygiene_management h ON p.seq=h.place_seq
         LEFT OUTER JOIN quarantine q ON p.seq=q.place_seq

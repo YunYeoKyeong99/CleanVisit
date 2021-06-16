@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
     <head>
+        <!-- Required meta tags -->
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <!-- Bootstrap CSS -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
 
         <title>Place</title>
@@ -11,9 +18,10 @@
         <h1>PLACE LIST</h1>
 
         <table>
-            <tr th:each="place:${placeList}" onclick="location.href='/places/detail?place_seq=[[${place.seq}]]'">
+            <tr th:each="place:${placeList}" onclick="location.href='/places/detail?place_seq=[${place.seq}]'">
                 <td>[[${place.name}]]</td>
-                <td>[[${place.imgUrl}]]</td>
+                <td><img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
+                    <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;"></td>
                 <td>[[${place.address}]]</td>
                 <td>[[${place.score}]]</td>
             </tr>

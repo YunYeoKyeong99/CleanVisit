@@ -47,7 +47,7 @@
 
         <br>
         <div id="place_info" style="height: auto; width: 98%; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
-            <h3>공공장소 이름</h3>
+            <h3>[[${place.name}]]</h3>
             <img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <button th:if="${place.adminId != user.id}" class="btn btn-outline-primary" onclick="location.href='sanitary_update.html'" style="float: right;">방역정보 업데이트</button><br><br>
@@ -60,6 +60,7 @@
         <div id="review_simple" style= "height: 300px; width: 48%; float:left; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>평가 및 리뷰</h3>
             <img th:src='|/img/star_@{place.reviewAvgScoreInt}.jpg|' style= 'float: left; height: 40px; width: 200px';>
+            <br>
             <p>[[${place.reviewCount}]]건의 리뷰</p>
             <br><br><br><br>
             <a href="/reviews/list?type=PLACE&place_seq=[[${place.seq}]]" style="text-align: right;"> >>더보기</a>
@@ -77,4 +78,30 @@
             거리두기 여부: <span th:text="${place.hygieneManagement.distance} ? 'O' : 'X'"></p>
         </div>
     </body>
+
+    <script>
+        $(document).ready(function() {
+            $("#placeRegisterBtn").on("click", function () {
+
+                        $.ajax({
+                            url: '/places/'+place.seq+'/image',
+                            processData: false,
+                            contentType: false,
+                            data: formData,
+                            type: 'PUT',
+                            dataType:'text',
+                            success: function () {
+                                location.href = '/places/detail?place_seq=' + place.seq;
+                            },
+                            error: function (jqXHR, textStatus, errorThrown) {
+                                alert("code:"+jqXHR.status+"\n"
+                                    +"message:"+jqXHR.responseText+"\n"
+                                    +"error:"+errorThrown
+                                );
+                            }
+                        });
+                    },
+            }
+        });
+    </script>
 </html>

@@ -4,6 +4,7 @@ import com.dabateam.cleanvisit.domain.entity.HygieneManagement;
 import com.dabateam.cleanvisit.domain.entity.Place;
 import com.dabateam.cleanvisit.domain.entity.PlaceLike;
 import com.dabateam.cleanvisit.domain.entity.Quarantine;
+import com.dabateam.cleanvisit.domain.mappedenum.PlaceCategory;
 import com.dabateam.cleanvisit.mapper.PlaceLikeMapper;
 import com.dabateam.cleanvisit.mapper.PlaceMapper;
 import lombok.RequiredArgsConstructor;
@@ -22,9 +23,9 @@ public class PlaceService {
     private final HygieneManagementService hygieneManagementService;
     private final QuarantineService quarantineService;
 
-    public List<Place> getPlaceList (Long prevLastPlaceSeq, Integer pageSize, String query) {
+    public List<Place> getPlaceList (Long prevLastPlaceSeq, Integer pageSize, String query, Integer category) {
 
-        return placeMapper.findPlaceList(prevLastPlaceSeq, pageSize, query);
+        return placeMapper.findPlaceList(prevLastPlaceSeq, pageSize, query, category);
     }
 
     public Place getPlace(Long seq){

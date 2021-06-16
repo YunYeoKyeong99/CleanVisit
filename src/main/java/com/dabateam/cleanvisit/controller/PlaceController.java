@@ -4,6 +4,7 @@ import com.dabateam.cleanvisit.domain.entity.HygieneManagement;
 import com.dabateam.cleanvisit.domain.entity.Place;
 import com.dabateam.cleanvisit.domain.entity.Quarantine;
 import com.dabateam.cleanvisit.domain.entity.User;
+import com.dabateam.cleanvisit.domain.mappedenum.PlaceCategory;
 import com.dabateam.cleanvisit.domain.req.ReqPlaceCreate;
 import com.dabateam.cleanvisit.domain.req.ResUploadResult;
 import com.dabateam.cleanvisit.resolver.SessionUser;
@@ -26,6 +27,7 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -38,6 +40,7 @@ import java.util.List;
 public class PlaceController {
 
     private final PlaceService placeService;
+    private final QuarantineService quarantineService;
     private final UploadService uploadService;
 
     @GetMapping("/list")
@@ -46,13 +49,15 @@ public class PlaceController {
             @Valid @Min(1L) @RequestParam(value = "prev_last_place_seq", required = false) Long prevLastPlaceSeq,
             @Valid @Min(1L) @Max(50L) @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
             @Valid @NotBlank @RequestParam(value = "query", required = false) String query,
+            @Valid @RequestParam(value="category", required = false) Integer category,
             Model model
     ){
         List<Place> placeList = placeService.getPlaceList(
                 //user.getSeq(),
                 prevLastPlaceSeq,
                 pageSize,
-                query);
+                query,
+                category);
         model.addAttribute("placeList", placeList);
     }
 

@@ -53,7 +53,7 @@
       <table style="height: auto; width: 98%; padding: 10px 10px 10px 10px;">
         <tr>
             <td th:if="${place != null}" style="border-top: 1px solid grey; padding: 10px 10px 10px 10px;">
-              <button type="button" class="btn btn-outline-primary" style="float: right; margin:3px; width: 120px; font-size:10px;">방역정보 업데이트</button>
+              <button type="button" id="quaratineUpdateBtn" class="btn btn-outline-primary" style="float: right; margin:3px; width: 120px; font-size:10px;">방역정보 업데이트</button>
               <img th:if="${place.imgUrl != null}" src="${place.imgUrl}" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
               <img th:if="${place.imgUrl == null}" src="img/user.png" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
               <br>
@@ -66,5 +66,18 @@
         </tr>
     </table>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4" crossorigin="anonymous"></script>
+    <script>
+      $(document).ready(function() {
+        $("#quaratineUpdateBtn").on("click",function () {
+
+        }
+
+        $.ajax({
+          type:"POST",
+          url:"/"
+        })
+        )
+      }
+    </script>
   </body>
 </html>
