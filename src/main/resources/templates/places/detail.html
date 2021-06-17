@@ -14,7 +14,7 @@
             <img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <button th:if="${place.adminId != user.id}" class="btn btn-outline-primary" onclick="location.href='sanitary_update.html'" style="float: right;">방역정보 업데이트</button><br><br>
-            <button class="btn btn-outline-primary" type="button" onclick="location.href='../reviews/register.html'" style="float: right;">리뷰 작성</button>     <!-- onclick="location.href='../reviews/register?place_seq=${place.seq}'" -->
+            <button class="btn btn-outline-primary" type="button" th:onclick="'location.href=\'../reviews/register?place_seq=' + ${place.seq} + '\''" style="float: right;"> 리뷰 작성</button>
             <br><br>
             <button onclick="changelike()" type='button' style='float: right;'><img src='img/heart_empty.jpg' id='like' style='height: 50px; width: 50px;'></button>
             <script>
@@ -70,8 +70,7 @@
                                 );
                             }
                         });
-                    },
-            }
+            });
         });
     </script>
 </html>

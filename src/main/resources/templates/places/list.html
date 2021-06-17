@@ -18,7 +18,7 @@
         <h1>PLACE LIST</h1>
 
         <table>
-            <tr th:each="place:${placeList}" onclick="location.href='/places/detail?place_seq=[${place.seq}]'">
+            <tr th:each="place:${placeList}" th:onclick="'location.href=\'/places/detail?place_seq='+${place.seq}+'\''">
                 <td><a href="detail.html">[[${place.name}]]</a></td>
                 <td><img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
                     <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;"></td>
