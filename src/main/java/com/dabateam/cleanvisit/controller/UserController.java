@@ -60,6 +60,12 @@ public class UserController {
     public void modify(){
     }
 
-//    @GetMapping()
-//    public ResponseEntity<User> re
+    @GetMapping("/my-page-like")
+    public void myPageLike(){
+    }
+
+    @GetMapping("/my-page-review")
+    public void myPageReview(){
+    }
+
 }
