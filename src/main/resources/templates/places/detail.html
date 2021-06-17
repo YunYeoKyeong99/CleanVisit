@@ -12,7 +12,7 @@
         <div id="place_info" style="height: auto; width: 98%; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>[[${place.name}]]</h3>
             <img th:if="${place.imgUrl == null}" src="img/example_place.jpeg" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
-            <img  th:if="${place.imgUrl != null}" th:src="|/display?fileName=${place.imgUrl}|" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
+            <img  th:if="${place.imgUrl != null}" th:src="\'/display?fileName='+${place.imgUrl}+'\''" id=place_img style="float: left; height: 180px; width: 240px; padding:8px;">
             <button th:if="${place.adminId != user.id}" class="btn btn-outline-primary" th:onclick="'location.href=\'/places/sanitary_update?place_seq='+${place.seq}+'\''" style="float: right;">방역정보 업데이트</button><br><br>
             <button class="btn btn-outline-primary" type="button" th:onclick="'location.href=\'../reviews/register?place_seq=' + ${place.seq} + '\''" style="float: right;">리뷰 작성</button>
             <br><br>
@@ -33,7 +33,7 @@
             <br>
             <p>[[${place.reviewCount}]]건의 리뷰</p>
             <br><br><br><br>
-            <a href="../reviews/list.html" style="text-align: right;"> >>더보기</a>  <!--href="/reviews/list?type=PLACE&place_seq=[[${place.seq}]]"-->
+            <a href="\'../reviews/register?place_seq=' + ${place.seq} + '\''" style="text-align: right;"> >>더보기</a>  <!--href="/reviews/list?type=PLACE&place_seq=[[${place.seq}]]"-->
         </div>
         <div id="place_detail" style= "height: 300px; width: 48%; float:right; border:1px solid rgb(136, 136, 136); margin: 10px 10px 10px 10px; padding: 10px 10px 10px 10px;">
             <h3>상세정보</h3>
