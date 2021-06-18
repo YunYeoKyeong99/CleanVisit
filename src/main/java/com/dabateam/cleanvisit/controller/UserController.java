@@ -1,11 +1,13 @@
 package com.dabateam.cleanvisit.controller;
 
 import com.dabateam.cleanvisit.domain.entity.Place;
+import com.dabateam.cleanvisit.domain.entity.Review;
 import com.dabateam.cleanvisit.domain.entity.User;
 import com.dabateam.cleanvisit.domain.req.ReqUserUpdate;
 import com.dabateam.cleanvisit.domain.req.ResUploadResult;
 import com.dabateam.cleanvisit.resolver.SessionUser;
 import com.dabateam.cleanvisit.service.PlaceService;
+import com.dabateam.cleanvisit.service.ReviewService;
 import com.dabateam.cleanvisit.service.UploadService;
 import com.dabateam.cleanvisit.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -31,6 +33,7 @@ public class UserController {
     private final UserService userService;
     private final PlaceService placeService;
     private final UploadService uploadService;
+    private final ReviewService reviewService;
 
     // 비밀번호 암호처리기
     private final PasswordEncoder passwordEncoder;
@@ -96,7 +99,10 @@ public class UserController {
             Model model
     ) {
         Place place = placeService.getPlaceByUserId(userId);
+        int reviewCount = reviewService.getCountReviewList(place.getSeq());
+
         model.addAttribute("place", place);
+        model.addAttribute("reviewCount",reviewCount);
     }
 
     @GetMapping("/modify")
