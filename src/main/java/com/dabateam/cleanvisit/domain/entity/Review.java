@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 @Getter
 @Setter
@@ -31,4 +32,8 @@ public class Review {
     private LocalDateTime createdAt;
 
     private User user;
+
+    public String getCreatedAtString() {
+        return getCreatedAt().format(DateTimeFormatter.ofPattern("yyyy년 MM월 dd일 a hh:mm"));
+    }
 }

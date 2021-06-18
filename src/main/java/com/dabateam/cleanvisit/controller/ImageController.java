@@ -2,11 +2,13 @@ package com.dabateam.cleanvisit.controller;
 
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.DefaultResourceLoader;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.io.File;
@@ -33,6 +35,30 @@ public class ImageController {
             File file = new File(uploadPath+File.separator+srcFileName);
 
             log.info("file: "+file);
+
+            HttpHeaders header = new HttpHeaders();
+
+            //MIME타입 처리
+            header.add("Content-Type", Files.probeContentType(file.toPath()));
+            //파일 데이터 처리
+            result = new ResponseEntity<>(FileCopyUtils.copyToByteArray(file), header, HttpStatus.OK);
+        } catch (Exception e){
+            log.error(e.getMessage());
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+        return result;
+    }
+
+    @GetMapping("/img/{fileName:.+}")
+    public ResponseEntity<byte[]> getStaticFile(@PathVariable String fileName) {
+
+        ResponseEntity<byte[]> result = null;
+
+        try{
+            DefaultResourceLoader defaultResourceLoader = new DefaultResourceLoader();
+            File file = new File(defaultResourceLoader.getResource("file:src/main/resources/static/img/"+fileName).getFile().getAbsolutePath());
+
+
 
             HttpHeaders header = new HttpHeaders();
 

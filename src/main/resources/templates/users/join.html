@@ -34,7 +34,7 @@
                     <input type="text" name="user_name" size="100" id="userName" placeholder="회원 이름 입력" style="margin: 10px 10px 10px 10px;">
                     <br><br>
                     <strong>생년월일*</strong><br>
-                    <input type="date" name="userBirthday"><br><br>
+                    <input type="date" id="userBirthday"><br><br>
                     <strong>주소*</strong>
                     <br>
                     <input type="text" name="user_address" size="100" id="userAddress" placeholder="회원 주소 입력" style="margin: 10px 10px 10px 10px;">
@@ -43,7 +43,7 @@
             </tr>
         </table>
         <div>
-            <button id="userRegisterBtn" class="btn btn-outline-primary" type="submit" onclick="location.href='my-page-review.html'" style="float: right; width: 90px; margin: 10px 50px 10px 20px; padding: 10px 10px 10px 10px;">회원가입</button>
+            <button id="userRegisterBtn" class="btn btn-outline-primary" type="submit" style="float: right; width: 90px; margin: 10px 50px 10px 20px; padding: 10px 10px 10px 10px;">회원가입</button>
         </div>
 
 
@@ -66,7 +66,10 @@
                         data: JSON.stringify(userObject),
                         contentType:"application/json; charset=UTF-8",
                         success: function () {
-                            alert("Created");
+                            alert("Create:)")
+                            setTimeout(function (){
+                                location.href = '/login';
+                            }, 2000);
                         },
                         error: function (xhr, textStatus, error) {
                             alert("code:"+xhr.status+"\n"

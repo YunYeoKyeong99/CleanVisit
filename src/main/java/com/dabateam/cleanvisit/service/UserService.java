@@ -1,6 +1,7 @@
 package com.dabateam.cleanvisit.service;
 
 import com.dabateam.cleanvisit.common.UserManager;
+import com.dabateam.cleanvisit.domain.entity.Place;
 import com.dabateam.cleanvisit.domain.entity.User;
 import com.dabateam.cleanvisit.mapper.UserMapper;
 import lombok.RequiredArgsConstructor;
@@ -25,6 +26,19 @@ public class UserService implements UserDetailsService {
         }
     }
 
+    public void modify(User user){
+        int updateCount = userMapper.update(user);
+
+        if(updateCount != 1) {
+            throw new RuntimeException(); // TODO FIX
+        }
+
+    }
+
+    public void delete(User user){
+        userMapper.delete(user);
+    }
+
     public User getUser(String id) {
         return userMapper.findById(id);
     }
@@ -44,4 +58,14 @@ public class UserService implements UserDetailsService {
                 UserManager.USER_AUTHORITIES
         );
     }
+
+    public void updateImage(String userId, String imageUrl) {
+
+        int updateCount = userMapper.updateUserImageUrl(userId, imageUrl);
+
+        if(updateCount != 1) {
+            throw new RuntimeException(); // TODO FIX
+        }
+    }
+
 }

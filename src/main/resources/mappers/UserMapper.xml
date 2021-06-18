@@ -16,10 +16,30 @@
         )
     </insert>
 
+    <update id="update" useGeneratedKeys="true" keyProperty="id">
+        UPDATE user
+        <set>
+            <if test="password != null">password = #{password},</if>
+            <if test="address != null">address = #{address},</if>
+        </set>
+        WHERE id = #{id}
+    </update>
+
+    <delete id="delete">
+        DELETE FROM user
+        WHERE id = #{id}
+    </delete>
+
     <select id="findById" resultType="User">
         SELECT *
         FROM user
         WHERE id = #{id}
     </select>
+
+    <update id="updateUserImageUrl">
+        UPDATE user
+        SET img_url = #{imgUrl}
+        WHERE id = #{id}
+    </update>
 
 </mapper>

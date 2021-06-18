@@ -12,19 +12,19 @@
         <script language="JavaScript">
             function star_img(star){
                 if (star > 4) {
-                    document.write("<img src='img/star_5.jpg' style= 'float: left; height: 40px; width: 200px';>");
+                    document.write("<img src='/img/star_5.jpg' style= 'float: left; height: 40px; width: 200px';>");
                 }
                 else if (star > 3) {
-                    document.write("<img src='img/star_4.jpg' style= 'float: left; height: 40px; width: 200px';>");
+                    document.write("<img src='/img/star_4.jpg' style= 'float: left; height: 40px; width: 200px';>");
                 }
                 else if (star > 2) {
-                    document.write("<img src='img/star_3.jpg' style= 'float: left; height: 40px; width: 200px';>");
+                    document.write("<img src='/img/star_3.jpg' style= 'float: left; height: 40px; width: 200px';>");
                 }
                 else if (star > 1) {
-                    document.write("<img src='img/star_2.jpg' style= 'float: left; height: 40px; width: 200px';>");
+                    document.write("<img src='/img/star_2.jpg' style= 'float: left; height: 40px; width: 200px';>");
                 }
                 else {
-                    document.write("<img src='img/star_1.jpg' style= 'float: left; height: 40px; width: 200px';>");
+                    document.write("<img src='/img/star_1.jpg' style= 'float: left; height: 40px; width: 200px';>");
                 }
             }
         </script>
@@ -32,51 +32,51 @@
     <body>
         <th:block th:replace="fragments/header :: header"></th:block>
         <br>
-        <h2>평가 및 리뷰(2,210)</h2>
+        <h2>평가 및 리뷰([[${reviewCount}]])</h2>
         <table border="0" style="height: auto; width: 98%; padding: 10px 10px 10px 10px;">
-            <tr>
+            <tr th:each="review:${reviewList}">
                 <td style="border-top: 1px solid grey; padding: 10px 10px 10px 10px;">
-                    <img src="img/user.png" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
+                    <img th:if="${user.imgUrl != null}" th:src="|/display?fileName=${user.imgUrl}|" id=user_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
+                    <img th:if="${user.imgUrl == null}" src="/img/user.png" id=user_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
                     <script>
                         star_img(5)
                     </script>
-                    <p><strong>작성자:</strong> cleankim &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>작성 일자:</strong> 2021년 1월 15일</p>
+                    <p><strong>작성자:</strong> [[${review.userId}]]&nbsp;&nbsp;&nbsp;&nbsp;
+                        <strong>작성 일자:</strong> [[${review.createdAtString}]] </p>
                     <br>
-                    <strong>좋아요</strong><br><br>
-                    방역관리를 철저하게 하는 것 같았습니다.
+                    <strong>[[${review.title}]]</strong><br><br>
+                    [[${review.content}]]
                     
                 </td>
             </tr>
-            <tr>
-                <td style="border-top: 1px solid grey; padding: 10px 10px 10px 10px;">
-                    <img src="img/user.png" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
-                    <script>
-                        star_img(3)
-                    </script>
-                    <p><strong>작성자:</strong> abc111 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>작성 일자:</strong> 2021년 5월 30일</p>
-                    <br>
-                    <strong>교보문고 리뷰</strong><br><br>
-                    광화문광장 바로얖에있어오.. 다만 사람들이 많아요... 피크타임때는 피하는게 좋을듯해요.
-                </td>
-            </tr>
-            <tr>
-                <td style="border-top: 1px solid grey; padding: 10px 10px 10px 10px;">
-                    <img src="img/user.png" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
-                    <script>
-                        star_img(2)
-                    </script>
-                    <p><strong>작성자:</strong> user123 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                        <strong>작성 일자:</strong> 2021년 6월 7일</p>
-                    <br>
-                    <strong>그저그래요</strong><br><br>
-                    그저그러네요
-                    
-                </td>
-            </tr>
+<!--            <tr>-->
+<!--                <td style="border-top: 1px solid grey; padding: 10px 10px 10px 10px;">-->
+<!--                    <img src="/img/user.png" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">-->
+<!--                    <script>-->
+<!--                        star_img(3)-->
+<!--                    </script>-->
+<!--                    <p><strong>작성자:</strong> abc111 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                        <strong>작성 일자:</strong> 2021년 5월 30일</p>-->
+<!--                    <br>-->
+<!--                    <strong>교보문고 리뷰</strong><br><br>-->
+<!--                    광화문광장 바로얖에있어오.. 다만 사람들이 많아요... 피크타임때는 피하는게 좋을듯해요.-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td style="border-top: 1px solid grey; padding: 10px 10px 10px 10px;">-->
+<!--                    <img src="/img/user.png" id=place_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">-->
+<!--                    <script>-->
+<!--                        star_img(2)-->
+<!--                    </script>-->
+<!--                    <p><strong>작성자:</strong> user123 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-->
+<!--                        <strong>작성 일자:</strong> 2021년 6월 7일</p>-->
+<!--                    <br>-->
+<!--                    <strong>그저그래요</strong><br><br>-->
+<!--                    그저그러네요-->
+<!--                    -->
+<!--                </td>-->
+<!--            </tr>-->
         </table>
         </div>
-
     </body>    
 </html>

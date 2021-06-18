@@ -5,6 +5,7 @@ import com.dabateam.cleanvisit.domain.entity.Place;
 import com.dabateam.cleanvisit.domain.entity.Review;
 import com.dabateam.cleanvisit.mapper.ReviewMapper;
 import lombok.RequiredArgsConstructor;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Service;
 
 import java.util.Collections;
@@ -27,6 +28,10 @@ public class ReviewService {
         }
 
         return Collections.emptyList();
+    }
+
+    public int getCountReviewList(Long placeSeq) {
+        return reviewMapper.countReviewList(placeSeq);
     }
 
     public void delete(String userId, Long seq){

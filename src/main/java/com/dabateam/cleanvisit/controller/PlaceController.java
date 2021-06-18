@@ -143,4 +143,13 @@ public class PlaceController {
 
     }
 
+    @PostMapping(value = "/{seq}/quarantines", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> updateQuarantine(
+            @PathVariable Long seq
+    ){
+        placeService.updateQuarantine(seq);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }

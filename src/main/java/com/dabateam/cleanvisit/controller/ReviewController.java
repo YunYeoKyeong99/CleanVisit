@@ -17,6 +17,8 @@ import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.Positive;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Slf4j
@@ -27,7 +29,7 @@ public class ReviewController {
     private final ReviewService reviewService;
 
     @GetMapping("/reviews/list")
-    public List<Review> getReviews(
+    public void getReviews(
             @SessionUser String userId,
             @RequestParam("type") ReviewListType reviewListType,
             @Valid @Positive @RequestParam(value="place_seq", required = false) Long placeSeq,
@@ -35,7 +37,13 @@ public class ReviewController {
             @Valid @Positive @Max(50L) @RequestParam(value = "page_size", required = false, defaultValue = "10") int pageSize,
             Model model
     ) {
-        return reviewService.getReviewList(reviewListType, userId, placeSeq, prevLastReviewSeq, pageSize);
+         List<Review> reviewList = reviewService.getReviewList(reviewListType, userId, placeSeq, prevLastReviewSeq, pageSize);
+         model.addAttribute("reviewList", reviewList);
+
+         if(placeSeq != null) {
+             Integer reviewCount = reviewService.getCountReviewList(placeSeq);
+             model.addAttribute("reviewCount", reviewCount);
+         }
     }
 
     @GetMapping("/reviews/register")

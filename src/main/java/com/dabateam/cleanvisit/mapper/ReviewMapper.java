@@ -17,6 +17,10 @@ public interface ReviewMapper {
             @Param("limitSize") Integer pageSize
     );
 
+    int countReviewList(
+            @Param("placeSeq") Long placeSeq
+    );
+
     int delete(
             @Param("userId") String userId,
             @Param("seq") Long seq

@@ -23,8 +23,9 @@
         <result property="title" column="title" />
         <result property="content" column="content" />
         <result property="score" column="score" />
+        <result property="createdAt" column="created_at" />
         <association property="user" javaType="User">
-            <id property="userId" column="user_id" />
+            <id property="id" column="user_id" />
             <result property="imgUrl" column="user_img_url" />
         </association>
     </resultMap>
@@ -36,10 +37,16 @@
         <where>
             <if test="prevLastReviewSeq != null">AND r.seq > #{prevLastReviewSeq}</if>
             <if test="placeSeq != null">AND r.place_seq = #{placeSeq}</if>
-            <if test="userSeq != null">AND r.user_seq = #{userSeq}</if>
+            <if test="userId != null">AND r.user_id = #{userId}</if>
         </where>
         ORDER BY r.seq DESC
         <if test="limitSize != null">LIMIT #{limitSize}</if>
+    </select>
+
+    <select id="countReviewList" resultType="Integer">
+        SELECT count(*)
+        FROM review
+        WHERE place_seq = #{placeSeq}
     </select>
 
     <delete id="delete">

@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -79,5 +80,16 @@ public class PlaceService {
         if(updateCount != 1) {
             throw new RuntimeException(); // TODO FIX
         }
+    }
+
+    public void updateQuarantine(Long seq){
+
+        Quarantine quarantine = new Quarantine();
+
+        quarantine.setPlaceSeq(seq);
+
+        quarantine.setDatetime(LocalDateTime.now());
+
+        quarantineService.createQuarantine(quarantine);
     }
 }
