@@ -6,8 +6,8 @@
             <a class="navbar-brand" href="../home">CleanVisit</a>
 
             <form class="d-flex">
-                <input id="query" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-                <button id="searchBtn" type="button" class="btn btn-outline-primary">Search</button>
+                <input id="headQuery" class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+                <button id="headSearchBtn" type="button" class="btn btn-outline-primary">Search</button>
 
             </form>
 
@@ -34,10 +34,11 @@
             </div>
         </div>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+
         <script>
             $(document).ready(function() {
-                $("#searchBtn").on("click", function () {
-                    location.href="/places/list?query=" + $("#query").val();
+                $("#headSearchBtn").on("click", function () {
+                    location.href="/places/list?query=" + $("#headQuery").val();
                 });
             });
         </script>
