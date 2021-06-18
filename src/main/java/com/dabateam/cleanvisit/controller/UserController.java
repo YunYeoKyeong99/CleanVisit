@@ -106,7 +106,7 @@ public class UserController {
 
     }
 
-    @PutMapping("/{id}/image")
+    @PutMapping("/{userId}/image")
     public ResponseEntity<Void> uploadImages(
             @PathVariable String userId,
             MultipartFile uploadFile

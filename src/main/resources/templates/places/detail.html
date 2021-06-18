@@ -48,30 +48,4 @@
             거리두기 여부: <span th:text="${place.hygieneManagement.distance} ? 'O' : 'X'"></span>
         </div>
     </body>
-
-    <script>
-        $(document).ready(function() {
-            $("#placeRegisterBtn").on("click", function () {
-
-                        $.ajax({
-                            url: '/places/'+place.seq+'/image',
-                            processData: false,
-                            contentType: false,
-                            data: formData,
-                            type: 'PUT',
-                            dataType:'text',
-                            success: function () {
-                                location.href = '/places/detail?place_seq=' + place.seq;
-                            },
-                            error: function (jqXHR, textStatus, errorThrown) {
-                                alert("code:"+jqXHR.status+"\n"
-                                    +"message:"+jqXHR.responseText+"\n"
-                                    +"error:"+errorThrown
-                                );
-                            }
-                        });
-                    },
-            }
-        });
-    </script>
 </html>

@@ -88,25 +88,26 @@
                   || userObject.address.length > 0) {
             needUpdateUserInfo = true;
             updatedUserInfo = false;
-            updateUserInfo(user, userObject);
+            updateUserInfo(userObject);
           }
 
           if(files.length > 0) {
             needUpdateImage = true;
             updatedImage = false;
-            updateImage(user, files);
+            updateImage(files);
           }
         });
       });
 
 
-      function updateUserInfo(user, userObject) {
+      function updateUserInfo(userObject) {
         $.ajax({
           type:"PUT",
           url: "/users",
           data: JSON.stringify(userObject),
           contentType:"application/json; charset=UTF-8",
           success: function (user) {
+            updatedUserInfo = true;
             redirectMyPage();
           },
           error: function (xhr, textStatus, error) {
@@ -118,19 +119,20 @@
         });
       }
 
-      function updateImage(user, files) {
+      function updateImage(files) {
         var formData = new FormData();
 
         formData.append("uploadFile",files[0]);
 
         $.ajax({
-          url: '/users/'+user.id+'/image',
+          url: "/users/" + [[${user.id}]] + "/image",
           processData: false,
           contentType: false,
           data: formData,
           type: 'PUT',
           dataType:'text',
           success: function () {
+            updatedImage = true;
             redirectMyPage();
           },
           error: function (jqXHR, textStatus, errorThrown) {

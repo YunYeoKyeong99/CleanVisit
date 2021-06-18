@@ -1,8 +1,10 @@
 package com.dabateam.cleanvisit.controller;
 
 import com.dabateam.cleanvisit.common.ReviewListType;
+import com.dabateam.cleanvisit.domain.entity.Place;
 import com.dabateam.cleanvisit.domain.entity.Review;
 import com.dabateam.cleanvisit.resolver.SessionUser;
+import com.dabateam.cleanvisit.service.PlaceService;
 import com.dabateam.cleanvisit.service.ReviewService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -27,6 +29,7 @@ import java.util.List;
 public class ReviewController {
 
     private final ReviewService reviewService;
+    private final PlaceService placeService;
 
     @GetMapping("/reviews/list")
     public void getReviews(
@@ -47,7 +50,13 @@ public class ReviewController {
     }
 
     @GetMapping("/reviews/register")
-    public void registerForm(){
+    public void registerForm(
+            @Valid @Positive @RequestParam("place_seq") Long placeSeq,
+            Model model
+    ){
+        Place place = placeService.getPlace(placeSeq);
+        model.addAttribute("place",place);
+
         log.info("registerForm: access to member");
     }
 
