@@ -69,7 +69,7 @@
         SELECT p.*,
                h.seq h_seq, h.hand_sanitization hm_hand_sanitization, h.heat_check h_heat_check,
                h.wearing_mask h_wearing_mask, h.distance h_distance,
-               q.datetime q_datetime,
+           MAX(q.datetime) q_datetime,
                ifnull(r.cnt, 0) as r_cnt, r.avg_score r_avg_score
         FROM place p
         INNER JOIN hygiene_management h ON p.seq=h.place_seq
@@ -77,11 +77,9 @@
         LEFT OUTER JOIN (
             SELECT place_seq, count(*) as cnt, avg(score) as avg_score
             FROM review
-            GROUP BY place_seq
+            WHERE place_seq = #{seq}
         ) r ON p.seq = r.place_seq
         WHERE p.seq = #{seq}
-        ORDER BY q.datetime DESC
-        LIMIT 1
     </select>
 
     <update id="updatePlaceImageUrl">
