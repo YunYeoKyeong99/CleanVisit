@@ -39,7 +39,8 @@
                     <img th:if="${user.imgUrl != null}" th:src="|/display?fileName=${user.imgUrl}|" id=user_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
                     <img th:if="${user.imgUrl == null}" src="/img/user.png" id=user_img style="float: left; height: 150px; width: 150px; margin: 10px 50px 10px 10px;">
                     <script>
-                        star_img(5)
+                        var a= [[${review.score}]]
+                        star_img(a)
                     </script>
                     <p><strong>작성자:</strong> [[${review.userId}]]&nbsp;&nbsp;&nbsp;&nbsp;
                         <strong>작성 일자:</strong> [[${review.createdAtString}]] </p>
