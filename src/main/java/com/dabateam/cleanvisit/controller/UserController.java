@@ -127,7 +127,15 @@ public class UserController {
 
 
     @GetMapping("/my-page-like")
-    public void myPageLike(){
+    public void myPageLike(
+            @SessionUser String userId,
+                           Model model
+    ) {
+        Place place = placeService.getPlaceByUserId(userId);
+        int reviewCount = reviewService.getCountReviewList(place.getSeq());
+
+        model.addAttribute("place", place);
+        model.addAttribute("reviewCount",reviewCount);
     }
 
     @GetMapping("/my-page-review")
