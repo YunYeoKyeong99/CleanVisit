@@ -29,8 +29,8 @@ public class PlaceService {
         return placeMapper.findPlaceList(prevLastPlaceSeq, pageSize, query, category);
     }
 
-    public Place getPlace(Long seq){
-        return placeMapper.findPlaceDetail(seq);
+    public Place getPlace(Long seq, String userId){
+        return placeMapper.findPlaceDetail(seq, userId);
     }
 
     @Transactional
@@ -48,12 +48,11 @@ public class PlaceService {
         return placeMapper.findPlaceByUserId(userId);
     }
 
-    @Transactional
     public void createLike(String userId,Long seq){
          Place place = placeMapper.findBySeq(seq);
 
-        if(place==null){
-            //
+        if(place == null){
+            throw new RuntimeException("Not Exists place seq " + seq);
         }
 
         PlaceLike placeLike = PlaceLike.builder()
@@ -63,6 +62,25 @@ public class PlaceService {
 
         try{
             placeLikeMapper.create(placeLike);
+        }catch(Exception e){
+            // DuplicateKeyException
+        }
+    }
+
+    public void deleteLike(String userId,Long seq){
+        Place place = placeMapper.findBySeq(seq);
+
+        if(place==null){
+            throw new RuntimeException("Not Exists place seq " + seq);
+        }
+
+        PlaceLike placeLike = PlaceLike.builder()
+                .userId(userId)
+                .placeSeq(seq)
+                .build();
+
+        try{
+            placeLikeMapper.delete(placeLike);
         }catch(Exception e){
             // DuplicateKeyException
         }

@@ -11,4 +11,10 @@
                    #{placeSeq}
                )
     </insert>
+
+    <delete id="delete">
+        DELETE FROM place_like
+        WHERE user_id = #{userId}
+        AND place_seq = #{placeSeq}
+    </delete>
 </mapper>

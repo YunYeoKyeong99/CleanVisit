@@ -16,12 +16,10 @@
             <button th:if="${place.adminId != user.id}" class="btn btn-outline-primary" th:onclick="'location.href=\'/places/sanitary_update?place_seq='+${place.seq}+'\''" style="float: right;">방역정보 업데이트</button><br><br>
             <button class="btn btn-outline-primary" type="button" th:onclick="'location.href=\'../reviews/register?place_seq=' + ${place.seq} + '\''" style="float: right;">리뷰 작성</button>
             <br><br>
-            <button onclick="changelike()" type='button' style='float: right;'><img src='/img/heart_empty.jpg' id='like' style='height: 50px; width: 50px;'></button>
-            <script>
-              function changelike(){
-                document.getElementById("like").src = "/img/heart.jpg";
-              }
-            </script>
+            <button onclick="changelike()" id="like_btn" type='button' style='float: right;'>
+                <img src='/img/heart.jpg' id='like_img' style='height: 50px; width: 50px; display: none' />
+                <img src='/img/heart_empty.jpg' id='unlike_img' style='height: 50px; width: 50px; display: block' />
+            </button>
             <p><strong>주소: </strong> [[${place.address}]]</p>
             <p><strong>전화번호: </strong> [[${place.phone}]]</p>
             <br><br><br><br><br>
@@ -47,5 +45,57 @@
             마스크 착용: <span th:text="${place.hygieneManagement.wearingMask} ? 'O' : 'X'"></span><br>
             거리두기 여부: <span th:text="${place.hygieneManagement.distance} ? 'O' : 'X'"></span>
         </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+        <script th:inline="javascript">
+            $(document).ready(function() {
+                if([[${place.isLike}]]) {
+                    $("#like_img").css('display', 'block');
+                    $("#unlike_img").css('display', 'none');
+                }
+
+                $("#like_btn").on("click", function () {
+                    if($("#like_img").css('display') === 'none') {
+                        createPlaceLike();
+                    } else {
+                        deletePlaceLike();
+                    }
+                });
+            });
+
+            function createPlaceLike() {
+                $("#like_img").css('display', 'block');
+                $("#unlike_img").css('display', 'none');
+                $.ajax({
+                    type:"POST",
+                    url: "/places/[[${place.seq}]]/like",
+                    contentType:"application/json; charset=UTF-8",
+                    success: function (place) { },
+                    error: function (xhr, textStatus, error) {
+                        alert("code:"+xhr.status+"\n"
+                            +"message:"+xhr.responseText+"\n"
+                            +"error:"+error
+                        );
+                    }
+                });
+            }
+
+            function deletePlaceLike() {
+                $("#like_img").css('display', 'none');
+                $("#unlike_img").css('display', 'block');
+                $.ajax({
+                    type:"DELETE",
+                    url: "/places/[[${place.seq}]]/like",
+                    contentType:"application/json; charset=UTF-8",
+                    success: function (place) { },
+                    error: function (xhr, textStatus, error) {
+                        alert("code:"+xhr.status+"\n"
+                            +"message:"+xhr.responseText+"\n"
+                            +"error:"+error
+                        );
+                    }
+                });
+            }
+        </script>
     </body>
 </html>

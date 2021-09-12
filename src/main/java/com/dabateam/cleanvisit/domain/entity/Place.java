@@ -42,6 +42,8 @@ public class Place {
 
     private Integer reviewCount;
 
+    private Boolean isLike;
+
     public Integer getReviewAvgScoreInt() {
         if(reviewAvgScore != null) {
             return reviewAvgScore.intValue();

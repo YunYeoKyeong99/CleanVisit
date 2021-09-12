@@ -27,7 +27,8 @@ public interface PlaceMapper {
     );
 
     Place findPlaceDetail(
-            @Param("seq") Long seq
+            @Param("seq") Long seq,
+            @Param("userId") String userId
     );
 
     int updatePlaceImageUrl(

@@ -51,10 +51,11 @@ public class ReviewController {
 
     @GetMapping("/reviews/register")
     public void registerForm(
+            @SessionUser String userId,
             @Valid @Positive @RequestParam("place_seq") Long placeSeq,
             Model model
     ){
-        Place place = placeService.getPlace(placeSeq);
+        Place place = placeService.getPlace(placeSeq, userId);
         model.addAttribute("place",place);
 
         log.info("registerForm: access to member");

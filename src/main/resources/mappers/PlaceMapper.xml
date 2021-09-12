@@ -50,6 +50,7 @@
         <result property="category" column="category" />
         <result property="reviewCount" column="r_cnt" />
         <result property="reviewAvgScore" column="r_avg_score" />
+        <result property="isLike" column="is_like" />
         <association property="hygieneManagement" javaType="HygieneManagement">
             <id property="seq" column="h_seq" />
             <result property="placeSeq" column="seq" />
@@ -70,7 +71,8 @@
                h.seq h_seq, h.hand_sanitization hm_hand_sanitization, h.heat_check h_heat_check,
                h.wearing_mask h_wearing_mask, h.distance h_distance,
            MAX(q.datetime) q_datetime,
-               ifnull(r.cnt, 0) as r_cnt, r.avg_score r_avg_score
+               ifnull(r.cnt, 0) as r_cnt, r.avg_score r_avg_score,
+               if(pl.seq IS NULL, 0, 1) as is_like
         FROM place p
         INNER JOIN hygiene_management h ON p.seq=h.place_seq
         LEFT OUTER JOIN quarantine q ON p.seq=q.place_seq
@@ -79,6 +81,7 @@
             FROM review
             WHERE place_seq = #{seq}
         ) r ON p.seq = r.place_seq
+        LEFT OUTER JOIN place_like pl ON p.seq = pl.place_seq AND pl.user_id = #{userId}
         WHERE p.seq = #{seq}
     </select>
 

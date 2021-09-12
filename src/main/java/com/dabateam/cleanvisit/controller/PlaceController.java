@@ -67,7 +67,7 @@ public class PlaceController {
             @Valid @RequestParam("place_seq") Long seq,
             Model model
     ){
-        Place place = placeService.getPlace(seq);
+        Place place = placeService.getPlace(seq, userId);
         model.addAttribute("place", place);
 
         if(place.getQuarantine() != null) {
@@ -132,7 +132,7 @@ public class PlaceController {
 //    }
 
 
-    @PostMapping(value="/{seq}/likes", produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/{seq}/like", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Void> createPlaceLike(
             @SessionUser String userId,
             @PathVariable Long seq
@@ -140,7 +140,16 @@ public class PlaceController {
         placeService.createLike(userId,seq);
 
         return new ResponseEntity<>(HttpStatus.OK);
+    }
 
+    @DeleteMapping(value="/{seq}/like", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Void> deletePlaceLike(
+            @SessionUser String userId,
+            @PathVariable Long seq
+    ){
+        placeService.deleteLike(userId,seq);
+
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PostMapping(value = "/{seq}/quarantines", produces = MediaType.APPLICATION_JSON_VALUE)
